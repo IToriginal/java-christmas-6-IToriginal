@@ -1,7 +1,7 @@
 package christmas.repository;
 
 import christmas.domain.Planner;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Optional;
@@ -19,7 +19,7 @@ public class MemoryPlannerRepository implements PlannerRepository {
     }
 
     @Override
-    public Optional<Planner> findByReservationDate(LocalDateTime reservationDate) {
+    public Optional<Planner> findByReservationDate(LocalDate reservationDate) {
         return memory.values().stream()
                 .filter(planner -> planner.getReservationDate().equals(reservationDate))
                 .findAny();

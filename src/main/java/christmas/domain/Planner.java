@@ -1,11 +1,12 @@
 package christmas.domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 
 public class Planner {
 
     private Long id;
-    private LocalDateTime reservationDate;
+    private LocalDate reservationDate;
 
     public Long getId() {
         return id;
@@ -15,11 +16,11 @@ public class Planner {
         this.id = id;
     }
 
-    public LocalDateTime getReservationDate() {
+    public LocalDate getReservationDate() {
         return reservationDate;
     }
 
-    public void setReservationDate(LocalDateTime reservationDate) {
+    public void setReservationDate(LocalDate reservationDate) {
         this.reservationDate = reservationDate;
     }
 

@@ -4,7 +4,7 @@ import static christmas.util.Parser.parseVisitDate;
 
 import christmas.domain.Planner;
 import christmas.repository.PlannerRepository;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class PlannerService {
 
@@ -15,7 +15,7 @@ public class PlannerService {
     }
 
     public void createPlanner(String visitDate) {
-        LocalDateTime reservationDate = parseVisitDate(visitDate);
+        LocalDate reservationDate = parseVisitDate(visitDate);
 
         Planner planner = new Planner();
         planner.setReservationDate(reservationDate);
