@@ -25,4 +25,9 @@ public class MemoryPlannerRepository implements PlannerRepository {
                 .findAny();
     }
 
+    @Override
+    public void clearMemory() {
+        memory.clear();
+    }
+
 }

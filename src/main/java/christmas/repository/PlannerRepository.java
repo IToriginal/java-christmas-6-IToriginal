@@ -10,4 +10,6 @@ public interface PlannerRepository {
 
     Optional<Planner> findByReservationDate(LocalDateTime reservationDate);
 
+    void clearMemory();
+
 }
