@@ -1,7 +1,19 @@
 package christmas;
 
+import christmas.controller.PlannerController;
+import christmas.repository.MemoryPlannerRepository;
+import christmas.repository.PlannerRepository;
+import christmas.service.PlannerService;
+
 public class Application {
+
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+
+        PlannerRepository plannerRepository = new MemoryPlannerRepository();
+        PlannerService plannerService = new PlannerService(plannerRepository);
+        PlannerController eventManager = new PlannerController(plannerService);
+        eventManager.run();
+
     }
+
 }
