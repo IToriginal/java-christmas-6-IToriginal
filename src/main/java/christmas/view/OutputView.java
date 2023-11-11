@@ -2,12 +2,14 @@ package christmas.view;
 
 import static christmas.util.Parser.formatCurrency;
 import static christmas.util.content.ErrorMessage.ERROR_WORD;
+import static christmas.util.content.InformationMessage.BENEFITS_LIST;
 import static christmas.util.content.InformationMessage.CHECK_LIST;
 import static christmas.util.content.InformationMessage.CHECK_MENU;
 import static christmas.util.content.InformationMessage.FREEBIES_MENU;
 import static christmas.util.content.InformationMessage.GREETING;
 import static christmas.util.content.InformationMessage.NOTHING;
 import static christmas.util.content.InformationMessage.PREVIEW_BENEFITS;
+import static christmas.util.content.InformationMessage.SEPARATION_MINUS;
 import static christmas.util.content.InformationMessage.TOTAL_ORDER_AMOUNT;
 import static christmas.util.rule.PlannerConstant.FREEBIES_TARGET;
 
@@ -51,6 +53,17 @@ public class OutputView {
 
     private static void displayFreebie() {
         System.out.printf(CHECK_LIST.getContent(), RestaurantMenu.DRINK_CHAMPAGNE.getName(), 1);
+    }
+
+    public static void displayBenefits(Map<String, Integer> benefits) {
+        System.out.println(BENEFITS_LIST.getContent());
+        for (Map.Entry<String, Integer> entry : benefits.entrySet()) {
+            String content = entry.getKey();
+            Integer discountPrice = entry.getValue();
+            System.out.println(
+                    content + SEPARATION_MINUS.getContent() + formatCurrency(discountPrice));
+        }
+
     }
 
     public static void displayErrorMessage(IllegalArgumentException e) {

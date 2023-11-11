@@ -10,6 +10,7 @@ public class Planner {
     private LocalDate reservationDate; // 예약 날짜
     private HashMap<String, Integer> menu; // 메뉴 (이름, 가격)
     private Integer totalOrderAmount; // 총 주문 금액
+    private HashMap<String, Integer> benefits; // 할인 혜택 리스트 (혜택 내용, 할인 가격)
 
     public Long getId() {
         return id;
@@ -42,4 +43,13 @@ public class Planner {
     public void setTotalOrderAmount(Integer totalOrderAmount) {
         this.totalOrderAmount = totalOrderAmount;
     }
+
+    public HashMap<String, Integer> getBenefits() {
+        return benefits;
+    }
+
+    public void setBenefits(HashMap<String, Integer> benefits) {
+        this.benefits = benefits;
+    }
+
 }

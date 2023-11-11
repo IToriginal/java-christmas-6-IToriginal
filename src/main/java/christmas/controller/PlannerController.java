@@ -29,6 +29,7 @@ public class PlannerController {
         OutputView.displayOrderMenu(plannerService.findMenu());
         OutputView.displayTotalOrderAmount(plannerService.findTotalOrderAmount());
         OutputView.displayFreebies(plannerService.findTotalOrderAmount());
+        OutputView.displayBenefits(plannerService.findBenefits());
     }
 
 }
