@@ -1,9 +1,12 @@
 package christmas.repository;
 
+import static christmas.util.Parser.parseOrderInfo;
+import static christmas.util.Parser.parseVisitDate;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.domain.Planner;
-import christmas.util.Parser;
+import java.time.LocalDate;
+import java.util.HashMap;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,16 +28,22 @@ class MemoryPlannerRepositoryTest {
         repository.clearMemory();
     }
 
-    @DisplayName("입력한 날짜는 메모리에 저장된다.")
+    @DisplayName("입력한 날짜와 메뉴는 메모리에 저장된다.")
     @Test
-    void save() {
-        String input = "26";
-        planner.setReservationDate(Parser.parseVisitDate(input));
+    void saveReservationDate() {
+        String inputDate = "26";
+        LocalDate visitDate = parseVisitDate(inputDate);
+        planner.setReservationDate(visitDate);
+
+        String inputOrder = "타파스-1,제로콜라-1";
+        HashMap<String, Integer> orderMenu = parseOrderInfo(inputOrder);
+        planner.setMenu(orderMenu);
 
         repository.save(planner);
-        Planner date = repository.findByReservationDate(planner.getReservationDate()).get();
+        Planner savedPlanner = repository.findByReservationDate(visitDate).orElseThrow();
 
-        assertThat(date).isEqualTo(planner);
+        assertThat(savedPlanner.getReservationDate()).isEqualTo(visitDate);
+        assertThat(savedPlanner.getMenu()).isEqualTo(orderMenu);
     }
 
 }
