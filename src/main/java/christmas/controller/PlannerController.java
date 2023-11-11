@@ -19,7 +19,8 @@ public class PlannerController {
 
     public void reservation() {
         String visitDate = InputView.requestVisitDate();
-        plannerService.createPlanner(visitDate);
+        String orderInfo = InputView.requestOrder();
+        plannerService.createPlanner(visitDate , orderInfo);
     }
 
 }

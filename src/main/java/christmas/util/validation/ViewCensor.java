@@ -10,6 +10,10 @@ public class ViewCensor {
         isSpace(input);
     }
 
+    public static void validateOrderMenu(String input) {
+        isSpace(input);
+    }
+
     private static void isNumeric(String input) {
         if (!input.matches("-?\\d+")) {
             throw new IllegalArgumentException(RESERVATION_DATE_ERROR.getContent());

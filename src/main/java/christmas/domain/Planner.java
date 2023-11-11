@@ -1,12 +1,14 @@
 package christmas.domain;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 
 
 public class Planner {
 
     private Long id;
-    private LocalDate reservationDate;
+    private LocalDate reservationDate; // 예약 날짜
+    private HashMap<String, Integer> menu; // 메뉴 (이름, 가격)
 
     public Long getId() {
         return id;
@@ -22,6 +24,14 @@ public class Planner {
 
     public void setReservationDate(LocalDate reservationDate) {
         this.reservationDate = reservationDate;
+    }
+
+    public HashMap<String, Integer> getMenu() {
+        return menu;
+    }
+
+    public void setMenu(HashMap<String, Integer> menu) {
+        this.menu = menu;
     }
 
 }
