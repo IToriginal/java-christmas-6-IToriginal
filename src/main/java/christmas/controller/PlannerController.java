@@ -15,14 +15,19 @@ public class PlannerController {
     public void run() {
         OutputView.displayGreeting();
         reservation();
+        reservationStatus();
     }
 
     private void reservation() {
         String visitDate = InputView.requestVisitDate();
         String orderInfo = InputView.requestOrder();
         plannerService.createPlanner(visitDate , orderInfo);
+    }
+
+    private void reservationStatus() {
         OutputView.displayPreview(plannerService.findReservationDate());
         OutputView.displayOrderMenu(plannerService.findMenu());
+        OutputView.displayTotalOrderAmount(plannerService.findTotalOrderAmount());
     }
 
 }

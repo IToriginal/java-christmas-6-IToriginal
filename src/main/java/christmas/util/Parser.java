@@ -1,8 +1,12 @@
 package christmas.util;
 
+import static christmas.util.content.InformationMessage.WON;
+
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 
 public class Parser {
 
@@ -22,6 +26,13 @@ public class Parser {
             }
         }
         return menu;
+    }
+
+    public static String formatCurrency(Integer amount) {
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.KOREA);
+        String formattedAmount = currencyFormat.format(amount);
+        return formattedAmount.replace(currencyFormat.getCurrency().getSymbol(), "")
+                + WON.getContent();
     }
 
 }

@@ -40,6 +40,13 @@ public class MemoryPlannerRepository implements PlannerRepository {
     }
 
     @Override
+    public Optional<Integer> findTotalOrderAmount() {
+        return memory.values().stream()
+                .findAny()
+                .map(Planner::getTotalOrderAmount);
+    }
+
+    @Override
     public void clearMemory() {
         memory.clear();
     }

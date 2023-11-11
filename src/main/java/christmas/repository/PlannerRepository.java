@@ -15,6 +15,8 @@ public interface PlannerRepository {
 
     Optional<HashMap<String, Integer>> findMenu();
 
+    Optional<Integer> findTotalOrderAmount();
+
     void clearMemory();
 
 }
