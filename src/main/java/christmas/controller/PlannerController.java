@@ -17,10 +17,12 @@ public class PlannerController {
         reservation();
     }
 
-    public void reservation() {
+    private void reservation() {
         String visitDate = InputView.requestVisitDate();
         String orderInfo = InputView.requestOrder();
         plannerService.createPlanner(visitDate , orderInfo);
+        OutputView.displayPreview(plannerService.findReservationDate());
+        OutputView.displayOrderMenu(plannerService.findMenu());
     }
 
 }

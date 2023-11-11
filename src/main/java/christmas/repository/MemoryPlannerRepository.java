@@ -26,6 +26,20 @@ public class MemoryPlannerRepository implements PlannerRepository {
     }
 
     @Override
+    public Optional<LocalDate> findReservationDate() {
+        return memory.values().stream()
+                .findAny()
+                .map(Planner::getReservationDate);
+    }
+
+    @Override
+    public Optional<HashMap<String, Integer>> findMenu() {
+        return memory.values().stream()
+                .findAny()
+                .map(Planner::getMenu);
+    }
+
+    @Override
     public void clearMemory() {
         memory.clear();
     }

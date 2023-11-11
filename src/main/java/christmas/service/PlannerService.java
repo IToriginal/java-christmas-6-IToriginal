@@ -27,4 +27,12 @@ public class PlannerService {
         plannerRepository.save(planner);
     }
 
+    public LocalDate findReservationDate() {
+        return plannerRepository.findReservationDate().get();
+    }
+
+    public HashMap<String, Integer> findMenu() {
+        return plannerRepository.findMenu().get();
+    }
+
 }
