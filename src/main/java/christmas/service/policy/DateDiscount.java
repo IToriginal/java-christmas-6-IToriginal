@@ -4,6 +4,7 @@ import static christmas.util.content.InformationMessage.DATE_DISCOUNT;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 
 public class DateDiscount implements Discount {
 
@@ -18,12 +19,13 @@ public class DateDiscount implements Discount {
     }
 
     @Override
-    public String benefitsContents() {
+    public String benefitsContents(LocalDate reservationDate) {
         return DATE_DISCOUNT.getContent();
     }
 
     @Override
-    public Integer calculateDiscount(Integer totalOrderAmount, LocalDate reservationDate) {
+    public Integer calculateDiscount(Integer totalOrderAmount, LocalDate reservationDate,
+            HashMap<String, Integer> menuCount) {
         if (reservationDate.isBefore(startDate) || reservationDate.isAfter(endDate)) {
             return 0;
         }

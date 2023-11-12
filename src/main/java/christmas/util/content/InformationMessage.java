@@ -9,12 +9,14 @@ public enum InformationMessage {
     CHECK_MENU("<주문 메뉴>"),
     CHECK_LIST("%s %d개%n"),
     TOTAL_ORDER_AMOUNT("\n<할인 전 총주문 금액>"),
-    WON("원\n"),
-    FREEBIES_MENU("<증정 메뉴>"),
+    WON("원"),
+    FREEBIES_MENU("\n<증정 메뉴>"),
     NOTHING("없음"),
     BENEFITS_LIST("\n<혜택 내역>"),
     SEPARATION_MINUS(": -"),
-    DATE_DISCOUNT("크리스마스 디데이 할인");
+    DATE_DISCOUNT("크리스마스 디데이 할인"),
+    WEEKDAY_DISCOUNT("평일 할인"),
+    WEEKEND_DISCOUNT("주말 할인");
 
     private final String content;
 

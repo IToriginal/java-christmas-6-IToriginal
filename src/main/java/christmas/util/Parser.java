@@ -1,12 +1,16 @@
 package christmas.util;
 
+import static christmas.util.content.ErrorMessage.ERROR_WORD;
+import static christmas.util.content.ErrorMessage.FORMAT_ERROR;
 import static christmas.util.content.InformationMessage.WON;
 
+import christmas.util.rule.RestaurantMenu;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class Parser {
 
@@ -33,6 +37,28 @@ public class Parser {
         String formattedAmount = currencyFormat.format(amount);
         return formattedAmount.replace(currencyFormat.getCurrency().getSymbol(), "")
                 + WON.getContent();
+    }
+
+    public static HashMap<String, Integer> parseCategoryCount(HashMap<String, Integer> order) {
+        HashMap<String, Integer> orderCategory = new LinkedHashMap<>();
+        for (Map.Entry<String, Integer> entry : order.entrySet()) {
+            String category = getCategory(entry.getKey());
+            Integer quantity = entry.getValue();
+
+            orderCategory.computeIfPresent(category,
+                    (key, existingQuantity) -> existingQuantity + quantity);
+            orderCategory.computeIfAbsent(category, key -> quantity);
+        }
+        return orderCategory;
+    }
+
+    private static String getCategory(String name) {
+        for (RestaurantMenu menu : RestaurantMenu.values()) {
+            if (menu.getName().equals(name)) {
+                return menu.getCategory();
+            }
+        }
+        throw new IllegalArgumentException(ERROR_WORD.getContent() + FORMAT_ERROR.getContent());
     }
 
 }
