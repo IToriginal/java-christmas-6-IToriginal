@@ -1,37 +1,41 @@
 package christmas.service.policy;
 
-import static christmas.util.content.InformationMessage.DATE_DISCOUNT;
+import static christmas.util.content.InformationMessage.SPECIAL_DISCOUNT;
+import static christmas.util.content.InformationMessage.WEEKDAY_DISCOUNT;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
+import java.util.Map;
 
-public class DateDiscount implements Discount {
+public class SpecialDayDiscount implements Discount {
 
     private final LocalDate startDate;
     private final LocalDate endDate;
-    private final int dailyIncrease;
 
-    public DateDiscount(LocalDate startDate, LocalDate endDate, int dailyIncrease) {
+    public SpecialDayDiscount(LocalDate startDate, LocalDate endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
-        this.dailyIncrease = dailyIncrease;
     }
 
     @Override
     public String benefitsContents(LocalDate reservationDate) {
-        return DATE_DISCOUNT.getContent();
+        return SPECIAL_DISCOUNT.getContent();
     }
 
     @Override
     public Integer calculateDiscount(Integer totalOrderAmount, LocalDate reservationDate,
             HashMap<String, Integer> menuCount) {
+        int target = reservationDate.getDayOfWeek().getValue();
+        // 이벤트 기간: 2023.12.01(금) ~ 2023.12.31(일)
         if (reservationDate.isBefore(startDate) || reservationDate.isAfter(endDate)) {
             return 0;
         }
 
-        int daysSinceStart = (int) startDate.until(reservationDate, ChronoUnit.DAYS);
-        return 1000 + daysSinceStart * dailyIncrease;
+        if (target == 7 || reservationDate.getDayOfMonth() == 25) {
+            return 1000;
+        }
+
+        return 0;
     }
 
 }
