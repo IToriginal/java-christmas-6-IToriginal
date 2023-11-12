@@ -15,12 +15,12 @@ import christmas.repository.PlannerRepository;
 import christmas.service.policy.DateDiscount;
 import christmas.service.policy.DayOfWeekDiscount;
 import christmas.service.policy.Discount;
+import christmas.service.policy.FreebiesEvent;
 import christmas.service.policy.SpecialDayDiscount;
 import christmas.util.rule.RestaurantMenu;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class PlannerService {
@@ -29,6 +29,7 @@ public class PlannerService {
     private Discount dateRangeDiscount;
     private Discount weekDayDiscount;
     private Discount specialDiscount;
+    private Discount freebiesEvent;
 
     public PlannerService(PlannerRepository plannerRepository) {
         this.plannerRepository = plannerRepository;
@@ -42,6 +43,10 @@ public class PlannerService {
                 LocalDate.of(YEAR.getValue(), DECEMBER.getValue(), END_DATE.getValue())
         );
         specialDiscount = new SpecialDayDiscount(
+                LocalDate.of(YEAR.getValue(), DECEMBER.getValue(), START_DATE.getValue()),
+                LocalDate.of(YEAR.getValue(), DECEMBER.getValue(), END_DATE.getValue())
+        );
+        freebiesEvent = new FreebiesEvent(
                 LocalDate.of(YEAR.getValue(), DECEMBER.getValue(), START_DATE.getValue()),
                 LocalDate.of(YEAR.getValue(), DECEMBER.getValue(), END_DATE.getValue())
         );
@@ -65,7 +70,7 @@ public class PlannerService {
             LocalDate reservationDate, HashMap<String, Integer> menuCount) {
         int totalOrderAmount = calculateTotalOrderAmount(menu);
         return calculateTotalDiscount(menuCount, totalOrderAmount, reservationDate,
-                dateRangeDiscount, weekDayDiscount, specialDiscount);
+                dateRangeDiscount, weekDayDiscount, specialDiscount, freebiesEvent);
     }
 
     private HashMap<String, Integer> calculateTotalDiscount(HashMap<String, Integer> menuCount,
