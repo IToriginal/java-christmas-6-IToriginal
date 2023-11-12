@@ -1,5 +1,5 @@
 <div style="text-align: right;">
-⏰ Document modification date: <span style='background-color: #F7DDBE'>23. 11. 11</span>
+⏰ Document modification date: <span style='background-color: #F7DDBE'>23. 11. 12</span>
 </div>
 
 ---
@@ -68,6 +68,7 @@
   - [ ] 특별 할인 기능 구현
     - 이벤트 기간: 2023. 12. 01(금) ~ 2023. 12. 31(일) 중 매주 일요일과 크리스마스 당일인 25일 (별이 있는 날짜)
     - 할인 금액: 1000원 할인
+  - [ ] 일정 금액 이상 할인 혜택 적용 기능 구현 
 - [ ] 증정 기능 구현
   - [x] 사은품 기능 구현
     - 이벤트 기간: 2023. 12. 01(금) ~ 2023. 12. 31(일)
