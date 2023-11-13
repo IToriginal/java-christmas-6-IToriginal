@@ -20,14 +20,24 @@ public class ViewCensor {
         inputFormatCheck(input);
         String[] order = input.split(",");
         Set<String> uniqueMenus = new HashSet<>();
+        int totalQuantity = 0;
         for (String menu : order) {
             String[] menuDetail = menu.split("-");
             String menuName = menuDetail[0].trim();
             String quantity = menuDetail[1].trim();
+            int menuQuantity = isQuantity(quantity);
             isFormat(menuDetail);
             isQuantity(quantity);
             isMenu(menuName);
             isUnique(uniqueMenus, menuName);
+            totalQuantity += menuQuantity;
+        }
+        checkLimit(totalQuantity);
+    }
+
+    private static void checkLimit(int totalQauntity) {
+        if (totalQauntity > 20) {
+            throw new IllegalArgumentException(FORMAT_ERROR.getContent());
         }
     }
 
@@ -50,7 +60,7 @@ public class ViewCensor {
         }
     }
 
-    private static void isQuantity(String quantity) {
+    private static int isQuantity(String quantity) {
         if (!quantity.matches("-?\\d+")) {
             throw new IllegalArgumentException(FORMAT_ERROR.getContent());
         }
@@ -58,6 +68,7 @@ public class ViewCensor {
         if (quantity.equals("0")) {
             throw new IllegalArgumentException(FORMAT_ERROR.getContent());
         }
+        return Integer.parseInt(quantity);
     }
 
     private static void isFormat(String[] menuDetail) {
