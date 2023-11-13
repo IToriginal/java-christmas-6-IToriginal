@@ -21,6 +21,8 @@ public interface PlannerRepository {
 
     Optional<Integer> findBenefitsAmount();
 
+    Optional<String> findEventBadge();
+
     void clearMemory();
 
 }

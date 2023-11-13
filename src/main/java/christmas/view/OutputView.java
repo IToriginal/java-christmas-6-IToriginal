@@ -6,6 +6,7 @@ import static christmas.util.content.InformationMessage.BENEFITS_LIST;
 import static christmas.util.content.InformationMessage.BENEFIT_AMOUNT;
 import static christmas.util.content.InformationMessage.CHECK_LIST;
 import static christmas.util.content.InformationMessage.CHECK_MENU;
+import static christmas.util.content.InformationMessage.EVENT_BADGE;
 import static christmas.util.content.InformationMessage.FINAL_PAYMENT;
 import static christmas.util.content.InformationMessage.FREEBIES_MENU;
 import static christmas.util.content.InformationMessage.FURE_MINUS;
@@ -98,6 +99,11 @@ public class OutputView {
             int payment = totalOrderAmount - benefitsAmount;
             System.out.println(formatCurrency(payment));
         }
+    }
+
+    public static void displayEventBadge(String eventBadge) {
+        System.out.println(EVENT_BADGE.getContent());
+        System.out.println(eventBadge);
     }
 
     public static void displayErrorMessage(IllegalArgumentException e) {

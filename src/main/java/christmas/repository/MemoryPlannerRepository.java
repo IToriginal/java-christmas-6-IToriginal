@@ -61,6 +61,13 @@ public class MemoryPlannerRepository implements PlannerRepository {
     }
 
     @Override
+    public Optional<String> findEventBadge() {
+        return memory.values().stream()
+                .findAny()
+                .map(Planner::getEventBadge);
+    }
+
+    @Override
     public void clearMemory() {
         memory.clear();
     }

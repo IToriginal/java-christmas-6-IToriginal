@@ -35,6 +35,7 @@ public class PlannerController {
         OutputView.displayBenefits(plannerService.findBenefits());
         OutputView.displayBenefitsAmount(benefitsAmount);
         OutputView.displayFinalPayment(totalOrderAmount, benefitsAmount);
+        OutputView.displayEventBadge(plannerService.findEventBadge());
     }
 
 }

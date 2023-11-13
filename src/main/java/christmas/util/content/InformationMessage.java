@@ -21,7 +21,11 @@ public enum InformationMessage {
     SPECIAL_DISCOUNT("특별 할인"),
     FREEBIES_EVENT("증정 이벤트"),
     BENEFIT_AMOUNT("\n<총혜택 금액>"),
-    FINAL_PAYMENT("\n<할인 후 예상 결제 금액>");
+    FINAL_PAYMENT("\n<할인 후 예상 결제 금액>"),
+    EVENT_BADGE("\n<12월 이벤트 배지>"),
+    BADGE_STAR("별"),
+    BADGE_TREE("트리"),
+    BADGE_SANTA("산타");
 
     private final String content;
 

@@ -3,6 +3,10 @@ package christmas.service;
 import static christmas.util.Parser.parseCategoryCount;
 import static christmas.util.Parser.parseOrderInfo;
 import static christmas.util.Parser.parseVisitDate;
+import static christmas.util.content.InformationMessage.BADGE_SANTA;
+import static christmas.util.content.InformationMessage.BADGE_STAR;
+import static christmas.util.content.InformationMessage.BADGE_TREE;
+import static christmas.util.content.InformationMessage.NOTHING;
 import static christmas.util.rule.PlannerConstant.CRISTMAS_DATE;
 import static christmas.util.rule.PlannerConstant.DAILY_INCREASE;
 import static christmas.util.rule.PlannerConstant.DECEMBER;
@@ -69,7 +73,22 @@ public class PlannerService {
         Integer totalDiscountAmount = calculateTotalDiscountAmount(discountBenefits);
         planner.setBenefitsAmount(totalDiscountAmount);
 
+        planner.setEventBadge(calculateEventBadge(totalDiscountAmount));
+
         plannerRepository.save(planner);
+    }
+
+    private String calculateEventBadge(Integer totalDiscountAmount) {
+        if (totalDiscountAmount < 5000) {
+            return NOTHING.getContent();
+        }
+        if (totalDiscountAmount < 10000) {
+            return BADGE_STAR.getContent();
+        }
+        if (totalDiscountAmount < 20000) {
+            return BADGE_TREE.getContent();
+        }
+        return BADGE_SANTA.getContent();
     }
 
     public Map<String, Integer> findBenefits() {
@@ -90,6 +109,10 @@ public class PlannerService {
 
     public Integer findBenefitsAmount() {
         return plannerRepository.findBenefitsAmount().get();
+    }
+
+    public String findEventBadge() {
+        return plannerRepository.findEventBadge().get();
     }
 
     private Integer calculateTotalDiscountAmount(HashMap<String, Integer> discountBenefits) {

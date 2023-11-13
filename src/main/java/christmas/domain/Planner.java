@@ -12,6 +12,7 @@ public class Planner {
     private Integer totalOrderAmount; // 총 주문 금액
     private HashMap<String, Integer> benefits; // 할인 혜택 리스트 (혜택 내용, 할인 가격)
     private Integer benefitsAmount; // 총 할인 금액
+    private String eventBadge; // 이벤트 뱃지
 
     public Long getId() {
         return id;
@@ -59,6 +60,14 @@ public class Planner {
 
     public void setBenefitsAmount(Integer benfitsAmount) {
         this.benefitsAmount = benfitsAmount;
+    }
+
+    public String getEventBadge() {
+        return eventBadge;
+    }
+
+    public void setEventBadge(String eventBadge) {
+        this.eventBadge = eventBadge;
     }
 
 }
