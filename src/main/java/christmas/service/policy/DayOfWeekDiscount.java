@@ -1,5 +1,7 @@
 package christmas.service.policy;
 
+import static christmas.util.content.InformationMessage.MENU_CATEGORY_DESSERT;
+import static christmas.util.content.InformationMessage.MENU_CATEGORY_MAIN;
 import static christmas.util.content.InformationMessage.WEEKDAY_DISCOUNT;
 import static christmas.util.content.InformationMessage.WEEKEND_DISCOUNT;
 
@@ -40,7 +42,7 @@ public class DayOfWeekDiscount implements Discount {
         // 주말 할인 (금,토)
         if (target == 5 || target == 6) {
             for (Map.Entry<String, Integer> entry : menuCount.entrySet()) {
-                if (entry.getKey().equals("MAIN")) {
+                if (entry.getKey().equals(MENU_CATEGORY_MAIN.getContent())) {
                     return entry.getValue() * 2023;
                 }
             }
@@ -49,7 +51,7 @@ public class DayOfWeekDiscount implements Discount {
         // 평일 할인 (일,월,화,수,목)
         if (target !=  5 && target != 6) {
             for (Map.Entry<String, Integer> entry : menuCount.entrySet()) {
-                if (entry.getKey().equals("DESSERT")) {
+                if (entry.getKey().equals(MENU_CATEGORY_DESSERT.getContent())) {
                     return entry.getValue() * 2023;
                 }
             }

@@ -2,6 +2,7 @@ package christmas.util.validation;
 
 import static christmas.util.content.ErrorMessage.FORMAT_ERROR;
 import static christmas.util.content.ErrorMessage.RESERVATION_DATE_ERROR;
+import static christmas.util.content.InformationMessage.MENU_CATEGORY_DRINK;
 
 import christmas.util.rule.RestaurantMenu;
 import java.util.Arrays;
@@ -20,6 +21,7 @@ public class ViewCensor {
         inputFormatCheck(input);
         String[] order = input.split(",");
         Set<String> uniqueMenus = new HashSet<>();
+        boolean hasOnlyDrink = true;
         int totalQuantity = 0;
         for (String menu : order) {
             String[] menuDetail = menu.split("-");
@@ -31,8 +33,28 @@ public class ViewCensor {
             isMenu(menuName);
             isUnique(uniqueMenus, menuName);
             totalQuantity += menuQuantity;
+            if (!checkCategory(menuName)) {
+                hasOnlyDrink = false;
+            }
+        }
+        if (hasOnlyDrink) {
+            throw new IllegalArgumentException(FORMAT_ERROR.getContent());
         }
         checkLimit(totalQuantity);
+    }
+
+    private static boolean checkCategory(String menuName) {
+        String category = getCategory(menuName);
+        return category.equals(MENU_CATEGORY_DRINK.getContent());
+    }
+
+    private static String getCategory(String menuName) {
+        for (RestaurantMenu menu : RestaurantMenu.values()) {
+            if (menu.getName().equals(menuName)) {
+                return menu.getCategory();
+            }
+        }
+        throw new IllegalArgumentException(FORMAT_ERROR.getContent());
     }
 
     private static void checkLimit(int totalQauntity) {
