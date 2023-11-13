@@ -1,7 +1,6 @@
 package christmas.service.policy;
 
 import static christmas.util.content.InformationMessage.FREEBIES_EVENT;
-import static christmas.util.content.InformationMessage.FREEBIES_MENU;
 import static christmas.util.rule.PlannerConstant.FREEBIES_TARGET;
 
 import java.time.LocalDate;

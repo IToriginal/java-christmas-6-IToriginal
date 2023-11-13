@@ -57,11 +57,20 @@ public class OutputView {
 
     public static void displayBenefits(Map<String, Integer> benefits) {
         System.out.println(BENEFITS_LIST.getContent());
+        int count = 0;
         for (Map.Entry<String, Integer> entry : benefits.entrySet()) {
             String content = entry.getKey();
             Integer discountPrice = entry.getValue();
-            System.out.println(
-                    content + SEPARATION_MINUS.getContent() + formatCurrency(discountPrice));
+            if (discountPrice > 0) {
+                System.out.println(
+                        content + SEPARATION_MINUS.getContent() + formatCurrency(discountPrice));
+            }
+            if (discountPrice == 0) {
+                count++;
+            }
+        }
+        if (count == 4) {
+            System.out.println(NOTHING.getContent());
         }
 
     }
