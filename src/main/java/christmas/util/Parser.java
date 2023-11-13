@@ -7,6 +7,7 @@ import static christmas.util.content.InformationMessage.WON;
 import christmas.util.rule.RestaurantMenu;
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -21,15 +22,14 @@ public class Parser {
     }
 
     public static HashMap<String, Integer> parseOrderInfo(String orderInfo) {
-        HashMap<String, Integer> menu = new LinkedHashMap<>();
-        String[] orders = orderInfo.split(",");
-        for (String order : orders) {
-            String[] menuItem = order.split("-");
-            if (menuItem.length == 2) {
-                menu.put(menuItem[0], Integer.parseInt(menuItem[1]));
-            }
-        }
-        return menu;
+        return Arrays.stream(orderInfo.split(","))
+                .map(order -> order.split("-"))
+                .filter(menuItem -> menuItem.length == 2)
+                .collect(
+                        LinkedHashMap::new,
+                        (result, menuItem) -> result.put(menuItem[0], Integer.parseInt(menuItem[1])),
+                        HashMap::putAll
+                );
     }
 
     public static String formatCurrency(Integer amount) {
@@ -40,25 +40,25 @@ public class Parser {
     }
 
     public static HashMap<String, Integer> parseCategoryCount(HashMap<String, Integer> order) {
-        HashMap<String, Integer> orderCategory = new LinkedHashMap<>();
-        for (Map.Entry<String, Integer> entry : order.entrySet()) {
-            String category = getCategory(entry.getKey());
-            Integer quantity = entry.getValue();
-
-            orderCategory.computeIfPresent(category,
-                    (key, existingQuantity) -> existingQuantity + quantity);
-            orderCategory.computeIfAbsent(category, key -> quantity);
-        }
-        return orderCategory;
+        return order.entrySet().stream()
+                .collect(
+                        HashMap::new,
+                        (result, entry) -> {
+                            String category = getCategory(entry.getKey());
+                            Integer quantity = entry.getValue();
+                            result.merge(category, quantity, Integer::sum);
+                        },
+                        HashMap::putAll
+                );
     }
 
     private static String getCategory(String name) {
-        for (RestaurantMenu menu : RestaurantMenu.values()) {
-            if (menu.getName().equals(name)) {
-                return menu.getCategory();
-            }
-        }
-        throw new IllegalArgumentException(ERROR_WORD.getContent() + FORMAT_ERROR.getContent());
+        return Arrays.stream(RestaurantMenu.values())
+                .filter(menu -> menu.getName().equals(name))
+                .findFirst()
+                .map(RestaurantMenu::getCategory)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        ERROR_WORD.getContent() + FORMAT_ERROR.getContent()));
     }
 
 }
