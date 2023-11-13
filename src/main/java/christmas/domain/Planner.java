@@ -11,6 +11,7 @@ public class Planner {
     private HashMap<String, Integer> menu; // 메뉴 (이름, 가격)
     private Integer totalOrderAmount; // 총 주문 금액
     private HashMap<String, Integer> benefits; // 할인 혜택 리스트 (혜택 내용, 할인 가격)
+    private Integer benefitsAmount; // 총 할인 금액
 
     public Long getId() {
         return id;
@@ -50,6 +51,14 @@ public class Planner {
 
     public void setBenefits(HashMap<String, Integer> benefits) {
         this.benefits = benefits;
+    }
+
+    public Integer getBenefitsAmount() {
+        return benefitsAmount;
+    }
+
+    public void setBenefitsAmount(Integer benfitsAmount) {
+        this.benefitsAmount = benfitsAmount;
     }
 
 }

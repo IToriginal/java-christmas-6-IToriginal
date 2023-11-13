@@ -3,7 +3,6 @@ package christmas.controller;
 import christmas.service.PlannerService;
 import christmas.view.InputView;
 import christmas.view.OutputView;
-import java.util.Map;
 
 public class PlannerController {
 
@@ -26,11 +25,16 @@ public class PlannerController {
     }
 
     private void reservationStatus() {
+        Integer totalOrderAmount = plannerService.findTotalOrderAmount();
+        Integer benefitsAmount = plannerService.findBenefitsAmount();
+
         OutputView.displayPreview(plannerService.findReservationDate());
         OutputView.displayOrderMenu(plannerService.findMenu());
-        OutputView.displayTotalOrderAmount(plannerService.findTotalOrderAmount());
+        OutputView.displayTotalOrderAmount(totalOrderAmount);
         OutputView.displayFreebies(plannerService.findTotalOrderAmount());
         OutputView.displayBenefits(plannerService.findBenefits());
+        OutputView.displayBenefitsAmount(benefitsAmount);
+        OutputView.displayFinalPayment(totalOrderAmount, benefitsAmount);
     }
 
 }

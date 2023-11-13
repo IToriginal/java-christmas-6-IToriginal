@@ -61,12 +61,46 @@ public class PlannerService {
         planner.setReservationDate(reservationDate);
         planner.setMenu(menu);
         planner.setTotalOrderAmount(calculateTotalOrderAmount(menu));
-        planner.setBenefits(discountPrice(menu, reservationDate, menuCount));
+
+        HashMap<String, Integer> discountBenefits = discountPrice(menu, reservationDate, menuCount);
+        planner.setBenefits(discountBenefits);
+
+        // 총 할인 금액 계산 및 설정
+        Integer totalDiscountAmount = calculateTotalDiscountAmount(discountBenefits);
+        planner.setBenefitsAmount(totalDiscountAmount);
 
         plannerRepository.save(planner);
     }
 
-    public HashMap<String, Integer> discountPrice(HashMap<String, Integer> menu,
+    public Map<String, Integer> findBenefits() {
+        return plannerRepository.findBenefits().get();
+    }
+
+    public Integer findTotalOrderAmount() {
+        return plannerRepository.findTotalOrderAmount().get();
+    }
+
+    public LocalDate findReservationDate() {
+        return plannerRepository.findReservationDate().get();
+    }
+
+    public HashMap<String, Integer> findMenu() {
+        return plannerRepository.findMenu().get();
+    }
+
+    public Integer findBenefitsAmount() {
+        return plannerRepository.findBenefitsAmount().get();
+    }
+
+    private Integer calculateTotalDiscountAmount(HashMap<String, Integer> discountBenefits) {
+        int totalDiscountAmount = 0;
+        for (int discountAmount : discountBenefits.values()) {
+            totalDiscountAmount += discountAmount;
+        }
+        return totalDiscountAmount;
+    }
+
+    private HashMap<String, Integer> discountPrice(HashMap<String, Integer> menu,
             LocalDate reservationDate, HashMap<String, Integer> menuCount) {
         int totalOrderAmount = calculateTotalOrderAmount(menu);
         return calculateTotalDiscount(menuCount, totalOrderAmount, reservationDate,
@@ -85,22 +119,6 @@ public class PlannerService {
             benefits.put(benefitsContents, discountPrice);
         }
         return benefits;
-    }
-
-    public Map<String, Integer> findBenefits() {
-        return plannerRepository.findBenefits().get();
-    }
-
-    public Integer findTotalOrderAmount() {
-        return plannerRepository.findTotalOrderAmount().get();
-    }
-
-    public LocalDate findReservationDate() {
-        return plannerRepository.findReservationDate().get();
-    }
-
-    public HashMap<String, Integer> findMenu() {
-        return plannerRepository.findMenu().get();
     }
 
     private Integer calculateTotalOrderAmount(HashMap<String, Integer> menu) {

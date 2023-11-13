@@ -19,6 +19,8 @@ public interface PlannerRepository {
 
     Optional<HashMap<String, Integer>> findBenefits();
 
+    Optional<Integer> findBenefitsAmount();
+
     void clearMemory();
 
 }

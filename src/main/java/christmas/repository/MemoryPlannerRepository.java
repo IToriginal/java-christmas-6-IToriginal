@@ -54,6 +54,13 @@ public class MemoryPlannerRepository implements PlannerRepository {
     }
 
     @Override
+    public Optional<Integer> findBenefitsAmount() {
+        return memory.values().stream()
+                .findAny()
+                .map(Planner::getBenefitsAmount);
+    }
+
+    @Override
     public void clearMemory() {
         memory.clear();
     }

@@ -3,17 +3,20 @@ package christmas.view;
 import static christmas.util.Parser.formatCurrency;
 import static christmas.util.content.ErrorMessage.ERROR_WORD;
 import static christmas.util.content.InformationMessage.BENEFITS_LIST;
+import static christmas.util.content.InformationMessage.BENEFIT_AMOUNT;
 import static christmas.util.content.InformationMessage.CHECK_LIST;
 import static christmas.util.content.InformationMessage.CHECK_MENU;
+import static christmas.util.content.InformationMessage.FINAL_PAYMENT;
 import static christmas.util.content.InformationMessage.FREEBIES_MENU;
+import static christmas.util.content.InformationMessage.FURE_MINUS;
 import static christmas.util.content.InformationMessage.GREETING;
 import static christmas.util.content.InformationMessage.NOTHING;
 import static christmas.util.content.InformationMessage.PREVIEW_BENEFITS;
 import static christmas.util.content.InformationMessage.SEPARATION_MINUS;
 import static christmas.util.content.InformationMessage.TOTAL_ORDER_AMOUNT;
 import static christmas.util.rule.PlannerConstant.FREEBIES_TARGET;
+import static christmas.util.rule.RestaurantMenu.DRINK_CHAMPAGNE;
 
-import christmas.util.rule.RestaurantMenu;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,7 +55,7 @@ public class OutputView {
     }
 
     private static void displayFreebie() {
-        System.out.printf(CHECK_LIST.getContent(), RestaurantMenu.DRINK_CHAMPAGNE.getName(), 1);
+        System.out.printf(CHECK_LIST.getContent(), DRINK_CHAMPAGNE.getName(), 1);
     }
 
     public static void displayBenefits(Map<String, Integer> benefits) {
@@ -73,6 +76,28 @@ public class OutputView {
             System.out.println(NOTHING.getContent());
         }
 
+    }
+
+    public static void displayBenefitsAmount(Integer benefitsAmount) {
+        System.out.println(BENEFIT_AMOUNT.getContent());
+        if (benefitsAmount != 0) {
+            System.out.println(FURE_MINUS.getContent() + formatCurrency(benefitsAmount));
+        }
+        if (benefitsAmount == 0) {
+            System.out.println("0원");
+        }
+    }
+
+    public static void displayFinalPayment(Integer totalOrderAmount, Integer benefitsAmount) {
+        System.out.println(FINAL_PAYMENT.getContent());
+        if (totalOrderAmount >= FREEBIES_TARGET.getValue()) {
+            int payment = totalOrderAmount - benefitsAmount + DRINK_CHAMPAGNE.getPrice();
+            System.out.println(formatCurrency(payment));
+        }
+        if (totalOrderAmount < FREEBIES_TARGET.getValue()) {
+            int payment = totalOrderAmount - benefitsAmount;
+            System.out.println(formatCurrency(payment));
+        }
     }
 
     public static void displayErrorMessage(IllegalArgumentException e) {
