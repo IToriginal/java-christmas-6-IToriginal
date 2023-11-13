@@ -1,15 +1,18 @@
 package christmas.controller;
 
-import christmas.service.PlannerService;
+import christmas.service.PlannerCreator;
+import christmas.service.PlannerQuery;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
 public class PlannerController {
 
-    private PlannerService plannerService;
+    private PlannerCreator plannerCreator;
+    private PlannerQuery plannerQuery;
 
-    public PlannerController(PlannerService plannerService) {
-        this.plannerService = plannerService;
+    public PlannerController(PlannerCreator plannerCreator, PlannerQuery plannerQuery) {
+        this.plannerCreator = plannerCreator;
+        this.plannerQuery = plannerQuery;
     }
 
     public void run() {
@@ -20,22 +23,22 @@ public class PlannerController {
 
     private void reservation() {
         String visitDate = InputView.requestVisitDate();
-        String orderInfo = InputView.requestOrder();
-        plannerService.createPlanner(visitDate , orderInfo);
+        String order = InputView.requestOrder();
+        plannerCreator.creatPlanner(visitDate , order);
     }
 
     private void reservationStatus() {
-        Integer totalOrderAmount = plannerService.findTotalOrderAmount();
-        Integer benefitsAmount = plannerService.findBenefitsAmount();
+        Integer totalOrderAmount = plannerQuery.findTotalOrderAmount();
+        Integer benefitsAmount = plannerQuery.findBenefitsAmount();
 
-        OutputView.displayPreview(plannerService.findReservationDate());
-        OutputView.displayOrderMenu(plannerService.findMenu());
+        OutputView.displayPreview(plannerQuery.findReservationDate());
+        OutputView.displayOrderMenu(plannerQuery.findMenu());
         OutputView.displayTotalOrderAmount(totalOrderAmount);
-        OutputView.displayFreebies(plannerService.findTotalOrderAmount());
-        OutputView.displayBenefits(plannerService.findBenefits());
+        OutputView.displayFreebies(plannerQuery.findTotalOrderAmount());
+        OutputView.displayBenefits(plannerQuery.findBenefits());
         OutputView.displayBenefitsAmount(benefitsAmount);
         OutputView.displayFinalPayment(totalOrderAmount, benefitsAmount);
-        OutputView.displayEventBadge(plannerService.findEventBadge());
+        OutputView.displayEventBadge(plannerQuery.findEventBadge());
     }
 
 }
