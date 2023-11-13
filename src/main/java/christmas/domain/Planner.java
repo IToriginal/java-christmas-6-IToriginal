@@ -6,21 +6,12 @@ import java.util.HashMap;
 
 public class Planner {
 
-    private Long id; // 식별자 (현재 요구사항에는 사용되지 않음)
     private LocalDate reservationDate; // 예약 날짜
     private HashMap<String, Integer> menu; // 메뉴 (이름, 가격)
     private Integer totalOrderAmount; // 총 주문 금액
     private HashMap<String, Integer> benefits; // 할인 혜택 리스트 (혜택 내용, 할인 가격)
     private Integer benefitsAmount; // 총 할인 금액
     private String eventBadge; // 이벤트 뱃지
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public LocalDate getReservationDate() {
         return reservationDate;

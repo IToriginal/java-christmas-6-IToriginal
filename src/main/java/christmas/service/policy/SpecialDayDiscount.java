@@ -1,11 +1,9 @@
 package christmas.service.policy;
 
 import static christmas.util.content.InformationMessage.SPECIAL_DISCOUNT;
-import static christmas.util.content.InformationMessage.WEEKDAY_DISCOUNT;
 
 import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.Map;
 
 public class SpecialDayDiscount implements Discount {
 
