@@ -13,15 +13,17 @@ import christmas.service.policy.Discount;
 import christmas.service.policy.FreebiesEvent;
 import christmas.service.policy.SpecialDayDiscount;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.stream.Collectors;
 
 public class DiscountCalculator {
 
-    private Discount dateDiscount;
-    private Discount weekDiscount;
-    private Discount specialDiscount;
-    private Discount freebiesEvent;
+    private final Discount dateDiscount;
+    private final Discount weekDiscount;
+    private final Discount specialDiscount;
+    private final Discount freebiesEvent;
 
     public DiscountCalculator() {
         dateDiscount = new DateDiscount(
@@ -55,14 +57,12 @@ public class DiscountCalculator {
 
     private HashMap<String, Integer> calculateTotalDiscount(HashMap<String, Integer> menuCount,
             int totalOrderAmount, LocalDate reservationDate, Discount... discountPolicies) {
-        HashMap<String, Integer> benefits = new LinkedHashMap<>();
-        for (Discount policy : discountPolicies) {
-            String benefitContent = policy.benefitsContents(reservationDate);
-            Integer benefitPrice = policy.calculateDiscount(
-                    totalOrderAmount, reservationDate, menuCount);
-            benefits.put(benefitContent, benefitPrice);
-        }
-        return benefits;
+        return Arrays.stream(discountPolicies)
+                .collect(Collectors.toMap(
+                        policy -> policy.benefitsContents(reservationDate),
+                        policy -> policy.calculateDiscount(totalOrderAmount, reservationDate, menuCount),
+                        (existing, replacement) -> existing, LinkedHashMap::new
+                ));
     }
 
 }
