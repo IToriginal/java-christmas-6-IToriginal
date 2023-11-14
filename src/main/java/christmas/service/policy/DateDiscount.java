@@ -1,6 +1,8 @@
 package christmas.service.policy;
 
 import static christmas.util.content.InformationMessage.DATE_DISCOUNT;
+import static christmas.util.rule.PlannerConstant.DEFAULT_DISCOUNT_AMOUNT;
+import static christmas.util.rule.PlannerConstant.ZERO_VALUE;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -26,12 +28,19 @@ public class DateDiscount implements Discount {
     @Override
     public Integer calculateDiscount(Integer totalOrderAmount, LocalDate reservationDate,
             HashMap<String, Integer> menuCount) {
-        if (reservationDate.isBefore(startDate) || reservationDate.isAfter(endDate)) {
-            return 0;
+        if (isDiscountableDate(reservationDate)) {
+            return ZERO_VALUE.getValue();
         }
+        return calculateDiscountAmount(reservationDate);
+    }
 
+    private boolean isDiscountableDate(LocalDate reservationDate) {
+        return reservationDate.isBefore(startDate) || reservationDate.isAfter(endDate);
+    }
+
+    private int calculateDiscountAmount(LocalDate reservationDate) {
         int daysSinceStart = (int) startDate.until(reservationDate, ChronoUnit.DAYS);
-        return 1000 + daysSinceStart * dailyIncrease;
+        return DEFAULT_DISCOUNT_AMOUNT.getValue() + daysSinceStart * dailyIncrease;
     }
 
 }

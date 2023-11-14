@@ -8,7 +8,9 @@ public enum PlannerConstant {
     START_DATE(1),
     END_DATE(31),
     CRISTMAS_DATE(25),
-    DAILY_INCREASE(100);
+    DAILY_INCREASE(100),
+    ZERO_VALUE(0),
+    DEFAULT_DISCOUNT_AMOUNT(1000);
 
     private final Integer value;
 
