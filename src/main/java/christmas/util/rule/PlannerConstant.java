@@ -11,7 +11,9 @@ public enum PlannerConstant {
     DAILY_INCREASE(100),
     ZERO_VALUE(0),
     DEFAULT_DISCOUNT_AMOUNT(1000),
-    WEEK_DISCOUNT_AMOUNT(2023);
+    WEEK_DISCOUNT_AMOUNT(2023),
+    CHRISTMAS_DATE(25),
+    SPECAIL_DISCOUNT(1000);
 
     private final Integer value;
 

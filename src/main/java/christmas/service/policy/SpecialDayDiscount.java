@@ -1,7 +1,11 @@
 package christmas.service.policy;
 
 import static christmas.util.content.InformationMessage.SPECIAL_DISCOUNT;
+import static christmas.util.rule.PlannerConstant.CRISTMAS_DATE;
+import static christmas.util.rule.PlannerConstant.SPECAIL_DISCOUNT;
+import static christmas.util.rule.PlannerConstant.ZERO_VALUE;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.HashMap;
 
@@ -23,17 +27,25 @@ public class SpecialDayDiscount implements Discount {
     @Override
     public Integer calculateDiscount(Integer totalOrderAmount, LocalDate reservationDate,
             HashMap<String, Integer> menuCount) {
-        int target = reservationDate.getDayOfWeek().getValue();
-        // 이벤트 기간: 2023.12.01(금) ~ 2023.12.31(일)
-        if (reservationDate.isBefore(startDate) || reservationDate.isAfter(endDate)) {
-            return 0;
+        DayOfWeek dayOfWeek = reservationDate.getDayOfWeek();
+        if (isDiscountableDate(reservationDate)) {
+            return ZERO_VALUE.getValue();
         }
 
-        if (target == 7 || reservationDate.getDayOfMonth() == 25) {
-            return 1000;
+        if (isSpecialDay(reservationDate, dayOfWeek)) {
+            return SPECAIL_DISCOUNT.getValue();
         }
 
-        return 0;
+        return ZERO_VALUE.getValue();
+    }
+
+    private boolean isSpecialDay(LocalDate reservationDate, DayOfWeek dayOfWeek) {
+        return dayOfWeek == DayOfWeek.SUNDAY
+                || reservationDate.getDayOfMonth() == CRISTMAS_DATE.getValue();
+    }
+
+    private boolean isDiscountableDate(LocalDate reservationDate) {
+        return reservationDate.isBefore(startDate) || reservationDate.isAfter(endDate);
     }
 
 }
