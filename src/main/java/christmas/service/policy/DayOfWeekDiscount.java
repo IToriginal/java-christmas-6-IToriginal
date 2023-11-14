@@ -1,62 +1,79 @@
 package christmas.service.policy;
 
-import static christmas.util.content.InformationMessage.MENU_CATEGORY_DESSERT;
-import static christmas.util.content.InformationMessage.MENU_CATEGORY_MAIN;
 import static christmas.util.content.InformationMessage.WEEKDAY_DISCOUNT;
 import static christmas.util.content.InformationMessage.WEEKEND_DISCOUNT;
+import static christmas.util.rule.MenuCategory.MENU_CATEGORY_DESSERT;
+import static christmas.util.rule.MenuCategory.MENU_CATEGORY_MAIN;
+import static christmas.util.rule.PlannerConstant.WEEK_DISCOUNT_AMOUNT;
+import static christmas.util.rule.PlannerConstant.ZERO_VALUE;
 
+import christmas.util.rule.MenuCategory;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.Map;
 
 public class DayOfWeekDiscount implements Discount {
 
     private final LocalDate startDate;
     private final LocalDate endDate;
 
-    public DayOfWeekDiscount(LocalDate startDate,
-            LocalDate endDate) {
+    public DayOfWeekDiscount(LocalDate startDate, LocalDate endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
     @Override
     public String benefitsContents(LocalDate reservationDate) {
-        int target = reservationDate.getDayOfWeek().getValue();
-        if (target !=  5 && target != 6) {
-            return WEEKDAY_DISCOUNT.getContent();
+        DayOfWeek dayOfWeek = reservationDate.getDayOfWeek();
+        if (isWeekend(dayOfWeek)) {
+            return WEEKEND_DISCOUNT.getContent();
         }
-        return WEEKEND_DISCOUNT.getContent();
+        return WEEKDAY_DISCOUNT.getContent();
     }
 
     @Override
     public Integer calculateDiscount(Integer totalOrderAmount, LocalDate reservationDate,
             HashMap<String, Integer> menuCount) {
-        // TODO: 컨벤션에 맞게 리팩토링 필요
-        int target = reservationDate.getDayOfWeek().getValue();
-        // 이벤트 기간: 2023.12.01(금) ~ 2023.12.31(일)
-        if (reservationDate.isBefore(startDate) || reservationDate.isAfter(endDate)) {
-            return 0;
+        DayOfWeek dayOfWeek = reservationDate.getDayOfWeek();
+
+        if (isDiscountableDate(reservationDate)) {
+            return ZERO_VALUE.getValue();
         }
 
-        // 주말 할인 (금,토)
-        if (target == 5 || target == 6) {
-            for (Map.Entry<String, Integer> entry : menuCount.entrySet()) {
-                if (entry.getKey().equals(MENU_CATEGORY_MAIN.getContent())) {
-                    return entry.getValue() * 2023;
-                }
-            }
+        if (isWeekend(dayOfWeek)) {
+            return calculateDiscountForCategory(menuCount, MENU_CATEGORY_MAIN);
         }
 
-        // 평일 할인 (일,월,화,수,목)
-        if (target !=  5 && target != 6) {
-            for (Map.Entry<String, Integer> entry : menuCount.entrySet()) {
-                if (entry.getKey().equals(MENU_CATEGORY_DESSERT.getContent())) {
-                    return entry.getValue() * 2023;
-                }
-            }
+        if (isWeekday(dayOfWeek)) {
+            return calculateDiscountForCategory(menuCount, MENU_CATEGORY_DESSERT);
         }
-        return 0;
+
+        return ZERO_VALUE.getValue();
+    }
+
+    private Integer calculateDiscountForCategory(HashMap<String, Integer> menuCount,
+            MenuCategory category) {
+        return menuCount.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().equals(category.getContent()))
+                .mapToInt(entry -> entry.getValue() * WEEK_DISCOUNT_AMOUNT.getValue())
+                .sum();
+    }
+
+    private boolean isDiscountableDate(LocalDate reservationDate) {
+        return reservationDate.isBefore(startDate) || reservationDate.isAfter(endDate);
+    }
+
+    private boolean isWeekend(DayOfWeek dayOfWeek) {
+        return dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY;
+    }
+
+    private boolean isWeekday(DayOfWeek dayOfWeek) {
+        return dayOfWeek == DayOfWeek.SUNDAY ||
+                dayOfWeek == DayOfWeek.MONDAY ||
+                dayOfWeek == DayOfWeek.TUESDAY ||
+                dayOfWeek == DayOfWeek.WEDNESDAY ||
+                dayOfWeek == DayOfWeek.THURSDAY;
     }
 
 }

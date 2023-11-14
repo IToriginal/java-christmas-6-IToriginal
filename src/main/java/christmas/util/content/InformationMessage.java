@@ -25,11 +25,7 @@ public enum InformationMessage {
     EVENT_BADGE("\n<12월 이벤트 배지>"),
     BADGE_STAR("별"),
     BADGE_TREE("트리"),
-    BADGE_SANTA("산타"),
-    MENU_CATEGORY_APPETIZER("APPETIZER"),
-    MENU_CATEGORY_MAIN("MAIN"),
-    MENU_CATEGORY_DESSERT("DESSERT"),
-    MENU_CATEGORY_DRINK("DRINK");
+    BADGE_SANTA("산타");
 
     private final String content;
 

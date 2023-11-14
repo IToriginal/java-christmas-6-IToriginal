@@ -2,7 +2,7 @@ package christmas.util.validation;
 
 import static christmas.util.content.ErrorMessage.FORMAT_ERROR;
 import static christmas.util.content.ErrorMessage.RESERVATION_DATE_ERROR;
-import static christmas.util.content.InformationMessage.MENU_CATEGORY_DRINK;
+import static christmas.util.rule.MenuCategory.MENU_CATEGORY_DRINK;
 
 import christmas.util.rule.RestaurantMenu;
 import java.util.Arrays;
