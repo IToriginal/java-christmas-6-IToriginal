@@ -7,6 +7,7 @@ import static christmas.util.rule.MenuCategory.MENU_CATEGORY_MAIN;
 import static christmas.util.rule.PlannerConstant.WEEK_DISCOUNT_AMOUNT;
 import static christmas.util.rule.PlannerConstant.ZERO_VALUE;
 
+import christmas.domain.DiscountParameters;
 import christmas.util.rule.MenuCategory;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -32,8 +33,9 @@ public class DayOfWeekDiscount implements Discount {
     }
 
     @Override
-    public Integer calculateDiscount(Integer totalOrderAmount, LocalDate reservationDate,
-            HashMap<String, Integer> menuCount) {
+    public Integer calculateDiscount(DiscountParameters parameters) {
+        LocalDate reservationDate = parameters.getReservationDate();
+        HashMap<String, Integer> menuCount = parameters.getMenuCount();
         DayOfWeek dayOfWeek = reservationDate.getDayOfWeek();
 
         if (isDiscountableDate(reservationDate)) {

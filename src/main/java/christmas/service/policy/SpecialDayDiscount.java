@@ -5,9 +5,9 @@ import static christmas.util.rule.PlannerConstant.CRISTMAS_DATE;
 import static christmas.util.rule.PlannerConstant.SPECAIL_DISCOUNT;
 import static christmas.util.rule.PlannerConstant.ZERO_VALUE;
 
+import christmas.domain.DiscountParameters;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.HashMap;
 
 public class SpecialDayDiscount implements Discount {
 
@@ -25,8 +25,9 @@ public class SpecialDayDiscount implements Discount {
     }
 
     @Override
-    public Integer calculateDiscount(Integer totalOrderAmount, LocalDate reservationDate,
-            HashMap<String, Integer> menuCount) {
+    public Integer calculateDiscount(DiscountParameters parameters) {
+        LocalDate reservationDate = parameters.getReservationDate();
+
         DayOfWeek dayOfWeek = reservationDate.getDayOfWeek();
         if (isDiscountableDate(reservationDate)) {
             return ZERO_VALUE.getValue();

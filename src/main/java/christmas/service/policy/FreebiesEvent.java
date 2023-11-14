@@ -5,8 +5,8 @@ import static christmas.util.rule.PlannerConstant.FREEBIES_TARGET;
 import static christmas.util.rule.PlannerConstant.ZERO_VALUE;
 import static christmas.util.rule.RestaurantMenu.DRINK_CHAMPAGNE;
 
+import christmas.domain.DiscountParameters;
 import java.time.LocalDate;
-import java.util.HashMap;
 
 public class FreebiesEvent implements Discount {
 
@@ -24,8 +24,10 @@ public class FreebiesEvent implements Discount {
     }
 
     @Override
-    public Integer calculateDiscount(Integer totalOrderAmount, LocalDate reservationDate,
-            HashMap<String, Integer> menuCount) {
+    public Integer calculateDiscount(DiscountParameters parameters) {
+        LocalDate reservationDate = parameters.getReservationDate();
+        Integer totalOrderAmount = parameters.getTotalOrderAmount();
+
         if (isDiscountableDate(reservationDate)) {
             return ZERO_VALUE.getValue();
         }

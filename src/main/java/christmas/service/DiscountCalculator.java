@@ -10,6 +10,7 @@ import static christmas.util.rule.PlannerConstant.YEAR;
 import christmas.service.policy.DateDiscount;
 import christmas.service.policy.DayOfWeekDiscount;
 import christmas.service.policy.Discount;
+import christmas.domain.DiscountParameters;
 import christmas.service.policy.FreebiesEvent;
 import christmas.service.policy.SpecialDayDiscount;
 import java.time.LocalDate;
@@ -57,10 +58,12 @@ public class DiscountCalculator {
 
     private HashMap<String, Integer> calculateTotalDiscount(HashMap<String, Integer> menuCount,
             int totalOrderAmount, LocalDate reservationDate, Discount... discountPolicies) {
+        DiscountParameters parameters = new DiscountParameters(totalOrderAmount, reservationDate,
+                menuCount);
         return Arrays.stream(discountPolicies)
                 .collect(Collectors.toMap(
                         policy -> policy.benefitsContents(reservationDate),
-                        policy -> policy.calculateDiscount(totalOrderAmount, reservationDate, menuCount),
+                        policy -> policy.calculateDiscount(parameters),
                         (existing, replacement) -> existing, LinkedHashMap::new
                 ));
     }
