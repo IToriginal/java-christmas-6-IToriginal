@@ -1,11 +1,12 @@
 <div style="text-align: right;">
-⏰ Document modification date: <span style='background-color: #F7DDBE'>23. 11. 12</span>
+⏰ Document modification date: <span style='background-color: #F7DDBE'>23. 11. 15</span>
 </div>
 
 ---
 
 # ⛳️ 크리스마스 프로모션
-우테코 식당을 위한 12월의 할인 프로모션 프로그램인 '12월 이벤트 플래너' 개발
+비즈니스 팀으로 우테코 식당을 위한 12월의 할인 프로모션 프로그램인 '12월 이벤트 플래너' 개발을 요청 받았다.
+개발 팀은 비즈니스 팀의 요구사항에 맞춰 식당 예약 정보에 맞게 메뉴의 프로모션 정보를 출력하는 프로그램을 개발한다.
 
 ## 프로그램의 목표
 1. 중복된 할인과 증정을 허용해서, 고객들이 혜택을 많이 받는다는 것을 체감할 수 있게 하는 것
