@@ -7,7 +7,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("입력값 검증 테스트")
 class ViewCensorTest {
+
+    @DisplayName("방문 예약 날짜가 1이상 31이하의 숫자가 아닌 경우, 예외가 발생한다.")
+    @Test
+    void validateReservationDateOverRangeTest() {
+        String input = "32";
+        assertThrows(IllegalArgumentException.class, () -> validateReservationDate(input));
+    }
 
     @DisplayName("정수가 아닌 입력값으로 예약하면 예외가 발생한다.")
     @Test
@@ -80,6 +88,20 @@ class ViewCensorTest {
     @Test
     void validateOrderMenuMethodUniqueTest() {
         String input = "양송이수프-1,제로콜라-1,양송이수프-1";
+        assertThrows(IllegalArgumentException.class, () -> validateOrderMenu(input));
+    }
+
+    @DisplayName("음료만 주문한 경우, 예외가 발생한다.")
+    @Test
+    void validateOrderOnlyDrinkTest() {
+        String input = "제로콜라-1";
+        assertThrows(IllegalArgumentException.class, () -> validateOrderMenu(input));
+    }
+
+    @DisplayName("주문한 메뉴의 수량이 20개를 초과한 경우, 예외가 발생한다.")
+    @Test
+    void validateOrderQuantityOverTest() {
+        String input = "티본스테이크-21";
         assertThrows(IllegalArgumentException.class, () -> validateOrderMenu(input));
     }
 
